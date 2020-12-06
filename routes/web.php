@@ -16,5 +16,22 @@ Route::get('/', function () {
 });
 
 Route::get('admin/', function () {
-    return view('admin.dashboard.dashboard');
+    return view('admin.user.list');
+});
+
+
+/**
+ * Tạo route group cho tất cả trang Admin.
+ * prefix : thêm tiền tố admin vào đường dẫn được liệt kê 
+ */
+Route::group(['prefix' => 'admin'], function () {
+
+    // User group. Thêm tiền tố user vào đường dẫn được liệt kê
+    Route::group(['prefix' => 'user'], function () {
+
+        Route::get('list', 'UserController@viewList'); // URL = localhost:8000/admin/user/list
+        Route::get('create', 'UserController@viewCreate'); // URL = localhost:8000/admin/user/create
+
+        Route::post('create', 'UserController@create'); // URL = localhost:8000/admin/user/create
+    });
 });

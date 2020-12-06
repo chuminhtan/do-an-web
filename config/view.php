@@ -30,4 +30,7 @@ return [
 
     'compiled' => realpath(storage_path('framework/views')),
 
+    // PAGINATION FULL
+    'pagination' => 'pagination::slider-3',
+
 ];
