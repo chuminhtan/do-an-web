@@ -55,7 +55,7 @@
 			<footer class="sticky-footer bg-white">
 				<div class="container my-auto">
 					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2020</span>
+						<span>Copyright &copy; 3Gs House 2020</span>
 					</div>
 				</div>
 			</footer>
@@ -104,8 +104,11 @@
 	<!-- Page level plugins -->
 	<script src="{{ asset('admin-assets/vendor/chart.js/Chart.min.js')}}"></script>
 
-	<!-- Sweet Alert 2 Plugin -->
+	<!-- Sweet Alert 2 plugin -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+	<!-- CK Editor 5 plugin -->
+	<script src="{{ asset('admin-assets/js/ckeditor5/ckeditor.js')}}"></script>
 
 	<!-- Page level custom scripts -->
 	<!-- <script src="{{ asset('admin-assets/js/demo/chart-area-demo.js')}}"></script>

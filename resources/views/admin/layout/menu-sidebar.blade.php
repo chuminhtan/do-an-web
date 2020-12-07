@@ -11,24 +11,39 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+    <!-- DASHBOARD - Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('admin/dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+    <!-- USER- Pages Collapse Menu -->
+    <li class="nav-item active">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
             <i class="fas fa-fw fa-user"></i>
             <span>Người Dùng</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseUser" class="collapse" aria-labelledby="headingUser" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Quản Lý Người Dùng:</h6>
                 <a class="collapse-item" href="{{ url('admin/user/list') }}">Danh Sách</a>
                 <a class="collapse-item" href="{{ url('admin/user/create') }}">Tạo</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- PRODUCT- Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="true" aria-controls="collapseProduct">
+            <i class="fas fa-fw fa-bars"></i>
+            <span>Sản Phẩm</span>
+        </a>
+        <div id="collapseProduct" class="collapse" aria-labelledby="headingProduct" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Quản Lý Sản Phẩm</h6>
+                <a class="collapse-item" href="{{ url('admin/product/list') }}">Danh Sách</a>
+                <a class="collapse-item" href="{{ url('admin/category/list') }}">Danh Mục</a>
             </div>
         </div>
     </li>

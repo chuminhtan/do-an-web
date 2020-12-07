@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
@@ -54,32 +56,135 @@ class UserController extends Controller
         ]);
 
         try {
-            $userImageComplete = "";
-            // Lưu ảnh vô thư mục public/images
+            // Kiểm tra email đã tồn tại chưa
+            $users = DB::table('nguoi_dung')->where('email', '=', $request->user_email)->get();
 
+            if (count($users) > 0) {
+                $messageBag = new MessageBag;
+                return view('admin.user.create', ["result" => "fail", "message" => "Email đã tồn tại"]);
+            }
+
+            // Lưu ảnh vô thư mục user : public/storage/user/<image_name>
             if ($request->hasFile('user_image')) {
-                $imageFile = $request->user_image;
-
-                // Đổi tên file trước khi lưu, tránh trùng file sau này
-                $fileName = $imageFile->getClientOriginalName(); // lấy tên file 
-                $fileExtension = $imageFile->getClientOriginalExtension(); // lấy đuôi mở rộng như jpg hoặc png
-                $userImageComplete = 'user-' . str_replace(' ', '_', $fileName) . '-' . rand() . '_' . time() . '.' . $fileExtension; // ghép tên + random + đuôi mở rộng
-                $request->file('user_image')->move('upload/user', $userImageComplete);
+                $imagePath = Storage::putFile('user', $request->file('user_image')); // trả về đường dẫn
+                $imageName = basename(($imagePath)); // trả về tên file
             }
 
             // Lưu vào DB
             DB::table('nguoi_dung')->insert([
-                'ten' => $request->user_name,
+                'ten_nguoi_dung' => $request->user_name,
                 'dien_thoai' => $request->user_phone,
                 'email' => $request->user_email,
                 'mat_khau' => bcrypt($request->user_password),
-                'loai_nguoi_dung' => $request->user_permission,
-                'anh_dai_dien' => $userImageComplete
+                'loai' => $request->user_permission,
+                'anh_nguoi_dung' => $imageName
             ]);
         } catch (Exception $ex) {
-            return view('admin.user.create')->withErrors($ex->getMessage());
+            return view('admin.user.create', ['result' => "fail", "message" => $ex->getMessage()]);
         }
 
-        return view('admin.user.create', ['result' => 'success']);
+        return view('admin.user.list', ['result' => 'success']);
+    }
+
+    /**
+     * Info
+     * method: get
+     */
+    public function viewInfo($user_id)
+    {
+
+        try {
+            $users = DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $user_id)->get();
+
+            if (count($users) == 0) {
+                return view('admin.user.list', ['result' => 'fail', 'message' => 'Không tồn tại']);
+            }
+        } catch (Exception $ex) {
+            return view('admin.user.edit', ['result' => 'fail']);
+        }
+
+        return view('admin.user.edit', ['user' => $users[0]]);
+    }
+
+    /**
+     * Edit
+     * method: post
+     */
+    public function edit(Request $request)
+    {
+        // kiểm tra dữ liệu đầu vào
+        $this->validate($request, [
+            'user_name' => 'required',
+            'user_phone' => 'required',
+            'user_email' => 'required',
+        ], [
+            'required' => ':attribute không để trống'
+        ], [
+            'user_name' => 'Tên',
+            'user_phone' => 'Điện thoại',
+            'user_email' => 'Email',
+        ]);
+
+        try {
+            // Cập nhật image
+            if ($request->has('user_image')) {
+
+                // Lấy đường dẫn ảnh trong db
+                $oldImagePaths = DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $request->user_id)->get();
+                $oldImagePath = $oldImagePaths[0]->anh_nguoi_dung;
+
+                // Xóa ảnh cũ
+                File::delete('storage/user/' . $oldImagePath);
+
+                // lưu ảnh vào thư mục
+                $imagePath = Storage::putFile('user', $request->user_image);
+                $imageName = basename($imagePath);
+
+                // cập nhật ảnh trong db
+                DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $request->user_id)->update(['anh_nguoi_dung' => $imageName]);
+            }
+
+            // Cập nhật mật khẩu
+            if ($request->has('is_change_password')) {
+                DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $request->user_id)->update(['mat_khau' => bcrypt($request->new_password)]);
+            }
+
+            // Cập nhật tên, điện thoại, quyền người dùng
+            DB::table('nguoi_dung')
+                ->where('ma_nguoi_dung', '=', $request->user_id)
+                ->update([
+                    'ten_nguoi_dung' => $request->user_name,
+                    'dien_thoai' => $request->user_phone,
+                    'loai' => $request->user_permission,
+                    'thoi_gian_cap_nhat' => date('Y-m-d H:i:s', time())
+                ]);
+        } catch (Exception $ex) {
+            dd($ex);
+        }
+
+        return view('admin.user.list', ['result' => 'success']);
+    }
+
+    /**
+     * Delete
+     * method: get
+     */
+    public function delete($user_id)
+    {
+        try {
+            // Lấy đường dẫn ảnh trong db
+            $oldImagePaths = DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $user_id)->get();
+            $oldImagePath = $oldImagePaths[0]->anh_nguoi_dung;
+
+            // Xóa ảnh cũ
+            File::delete('storage/user/' . $oldImagePath);
+
+            // Xóa người dùng trong db
+            DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $user_id)->delete();
+        } catch (Exception $ex) {
+            return view('admin.user.list', ['result' => 'fail', 'message' => $ex->getMessage()]);
+        }
+
+        return view('admin.user.list', ['result' => 'success']);
     }
 }

@@ -35,7 +35,8 @@
                             <th>Email</th>
                             <th>Quyền</th>
                             <th>Đăng Nhập Gần Nhất</th>
-                            <th>Thời gian tạo</th>
+                            <th>TG Tạo</th>
+                            <th>TG Cập Nhật</th>
                             <th>Thao Tác</th>
                         </tr>
                     </thead>
@@ -50,26 +51,27 @@
                             <td>{{ $number }}</td>
                             <td>{{ $user->ma_nguoi_dung }}</td>
                             <td>
-                                <image src="{{ asset("upload/user/$user->anh_dai_dien") }}" alt="img" width="80">
+                                <image src="{{ asset("storage/user/$user->anh_nguoi_dung") }}" alt="img" width="80">
                             </td>
-                            <td>{{ $user->ten }}</td>
+                            <td>{{ $user->ten_nguoi_dung }}</td>
                             <td>{{ $user->dien_thoai }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                @if ($user->loai_nguoi_dung == 1)
-                                Nhân viên
-                                @elseif ($user->loai_nguoi_dung == 2)
-                                Quản lý
+                                @if ($user->loai == 1)
+                                <span class="text-white bg-secondary p-1">Nhân Viên</span>
+                                @elseif ($user->loai== 2)
+                                <span class="text-white bg-success p-1">Quản Trị</span>
                                 @endif
                             </td>
                             <td>{{ $user->dang_nhap_gan_nhat }}</td>
                             <td>{{ $user->thoi_gian_tao }}</td>
+                            <td>{{ $user->thoi_gian_cap_nhat }}</td>
                             <td>
-                                <a href="{{ url("admin/user/edit/$user->ma_nguoi_dung") }}" class="btn btn-info btn-circle btn-sm">
-                                    <i class="fas fa-edit"></i>
+                                <a href="{{ url("admin/user/info/$user->ma_nguoi_dung") }}" class="btn btn-info btn-circle btn-sm">
+                                    <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a href="{{ url("admin/user/delete/$user->ma_nguoi_dung ") }}" class="btn btn-danger btn-circle btn-sm">
-                                    <i class="fas fa-trash"></i>
+                                <a href="{{ url("admin/user/delete/$user->ma_nguoi_dung") }}" class="btn btn-danger btn-circle btn-sm btn-delete" onclick="return confirmDelete(this)">
+                                    <i class=" fas fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
@@ -80,10 +82,56 @@
                         @endif
                     </tbody>
                 </table>
+                @if (isset($userList))
                 {{ $userList->links() }}
+                @endif
             </div>
         </div>
     </div>
 </div>
 <!-- kết thúc main-container -->
+@endsection
+<!-- Javascript -->
+@section('script')
+<script>
+    // Xác nhận trước khi xóa. btnDelete được truyền vào bằng từ khóa this trong lúc gọi hàm
+    const confirmDelete = (btnDelete) => {
+        Swal.fire({
+            title: 'Xóa người dùng này?',
+            text: "Bạn không thể khôi phục sau khi xóa",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.assign(btnDelete.href)
+            }
+            return false
+        })
+        return false
+    }
+    // Kiểm tra biến result từ server gửi về để thông báo kết quả
+    @if(isset($result))
+    @if($result == "success")
+    Swal.fire({
+        icon: 'success',
+        title: 'Thành Công',
+        showConfirmButton: false,
+        timer: 1200
+    }).then((result) => {
+        location.assign("{{ url('admin/user/list') }}")
+    })
+    @else
+
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Không Thành Công!',
+    })
+    @endif
+    @endif
+</script>
 @endsection
