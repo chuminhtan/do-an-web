@@ -5,7 +5,7 @@
 @section('main-container')
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Người Dùng</h1>
+    <h1 class="h3 mb-0 text-primary font-weight-bold">Người Dùng</h1>
 </div>
 
 <!-- Page Body -->
@@ -67,10 +67,13 @@
                             <td>{{ $user->thoi_gian_tao }}</td>
                             <td>{{ $user->thoi_gian_cap_nhat }}</td>
                             <td>
-                                <a href="{{ url("admin/user/info/$user->ma_nguoi_dung") }}" class="btn btn-info btn-circle btn-sm">
+                                <a href="{{ url("admin/user/info/$user->ma_nguoi_dung") }}"
+                                    class="btn btn-info btn-circle btn-sm">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a href="{{ url("admin/user/delete/$user->ma_nguoi_dung") }}" class="btn btn-danger btn-circle btn-sm btn-delete" onclick="return confirmDelete(this)">
+                                <a href="{{ url("admin/user/delete/$user->ma_nguoi_dung") }}"
+                                    class="btn btn-danger btn-circle btn-sm btn-delete"
+                                    onclick="return confirmDelete(this)">
                                     <i class=" fas fa-trash"></i>
                                 </a>
                             </td>

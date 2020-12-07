@@ -14,7 +14,8 @@
 <div class="card">
     <div class="card-body">
         <!-- Content Row -->
-        <form class="conatainer" action="{{ asset('admin/product/create') }}" method="POST" enctype="multipart/form-data">
+        <form class="conatainer" action="{{ asset('admin/product/create') }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             <div class="row d-flex justify-content-between">
 
@@ -26,7 +27,9 @@
                     <div class="form-group row">
                         <label for="product_name" class="col-md-3 col-form-label">Tên</label>
                         <div class="col-sm-8">
-                            <input type="text" name="product_name" class="form-control font-weight-bold" id="product_name" placeholder="Nhập tên" pattern=".{5,40}" title="Tối thiểu 5 ký tự và tối đa 40 ký tự" required />
+                            <input type="text" name="product_name" class="form-control font-weight-bold"
+                                id="product_name" placeholder="Nhập tên" pattern=".{5,40}"
+                                title="Tối thiểu 5 ký tự và tối đa 40 ký tự" required />
                         </div>
                     </div>
 
@@ -34,7 +37,9 @@
                     <div class="form-group row">
                         <label for="product_price" class="col-md-3 col-form-label">Giá bán</label>
                         <div class="col-sm-8">
-                            <input type="number" name="product_price" class="form-control text-danger text-right font-weight-bold" id="product_price" placeholder="Nhập giá bán" min="1000" max="10000000000" step="1000" required />
+                            <input type="number" name="product_price"
+                                class="form-control text-danger text-right font-weight-bold" id="product_price"
+                                placeholder="Nhập giá bán" min="1000" max="10000000000" step="1000" required />
                         </div>
                     </div>
 
@@ -42,7 +47,9 @@
                     <div class="form-group row">
                         <label for="product_quantity" class="col-md-3 col-form-label">Số lượng</label>
                         <div class="col-sm-8">
-                            <input type="number" name="product_quantity" class="form-control text-right" id="product_quantity" placeholder="Nhập số lượng" min="0" max="100000000" step="1" required value="0"/>
+                            <input type="number" name="product_quantity" class="form-control text-right"
+                                id="product_quantity" placeholder="Nhập số lượng" min="0" max="100000000" step="1"
+                                required value="0" />
                         </div>
                     </div>
 
@@ -51,19 +58,19 @@
                         <label for="product_status" class="col-md-3 col-form-label">Tình trạng</label>
                         <div class="col-sm-8">
                             <select class="form-control" name="product_status" id="product_status">
-                                <option value="1">Mở bán</option>
-                                <option value="0">Tạm ngưng</option>
+                                <option value="1" class="font-weight-bold">Mở bán</option>
+                                <option value="0" class="font-weight-bold">Tạm ngưng</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- phân loại -->
                     <div class="form-group row">
-                        <label for="product_type" class="col-md-3 col-form-label">Phân loại/label>
+                        <label for="product_type" class="col-md-3 col-form-label">Phân loại</label>
                         <div class="col-sm-8">
                             <select class="form-control" name="product_type" id="product_type">
-                                <option value="0">Sản phẩm thường</option>
-                                <option value="1">Sản phẩm nổi bật</option>
+                                <option value="0" class="font-weight-bold">Sản phẩm thường</option>
+                                <option value="1" class="font-weight-bold">Sản phẩm nổi bật</option>
                             </select>
                         </div>
                     </div>
@@ -74,7 +81,8 @@
                         <div class="col-sm-8">
                             <select class="form-control" name="product_category" id="product_category">
                                 @foreach ($categoryList as $category)
-                                    <option value="{{ $category->ma_danh_muc }}">{{ $category->ten_danh_muc }}</option>
+                                <option value="{{ $category->ma_danh_muc }}" class="font-weight-bold">
+                                    {{ $category->ten_danh_muc }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -84,8 +92,10 @@
                     <div class="form-group row">
                         <label for="product_image" class="col-md-3 col-form-label">Ảnh đại diện</label>
                         <div class="col-sm-8">
-                            <input type="file" name="product_image" class="form-control mb-3 p-1" accept="image/*" id="product_image" required>
-                            <img id="output" src="{{ asset('images/default.png')}}" width="300" style="border:2px solid #000; border-radius: 5px;" />
+                            <input type="file" name="product_image" class="form-control mb-3 p-1" accept="image/*"
+                                id="product_image" required>
+                            <img id="output" src="{{ asset('images/default.png')}}" width="300"
+                                style="border:2px solid #000; border-radius: 5px;" />
                         </div>
                     </div>
 
@@ -97,7 +107,8 @@
                     <!-- mô tả -->
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <textarea class="form-control" name="product_description" id="product_description" rows="5"></textarea>
+                            <textarea class="form-control" name="product_description" id="product_description"
+                                rows="5"></textarea>
                         </div>
                     </div>
                 </div>
@@ -124,7 +135,7 @@
         <!-- end card body -->
     </div>
     <!-- kết thúc main-container -->
-    @endsection 
+    @endsection
     {{-- Javascript --}}
     @section('script')
     <script>

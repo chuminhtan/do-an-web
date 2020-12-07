@@ -133,6 +133,7 @@ class ProductController extends Controller
     public function edit(Request $request)
     {
         $this->validate($request, [
+            'product_id' => 'required',
             'product_name' => 'required',
             'product_price' => 'required',
             'product_quantity' => 'required',
@@ -143,6 +144,7 @@ class ProductController extends Controller
         ], [
             'required' => ':attribute không để trống'
         ], [
+            'product_id' => 'Mã',
             'product_name' => 'Tên',
             'product_price' => 'Giá bán',
             'product_quantity' => 'Số lượng',
@@ -152,18 +154,13 @@ class ProductController extends Controller
             'product_description' => 'Mô tả',
         ]);
 
-        $data = [
-            'product_name' => trim($request->product_name, " "), //cắt khoảng trắng 2 bên của tên
-        ];
-
         try {
 
             // Cập nhật image
             if ($request->has('product_image')) {
-
                 // Lấy đường dẫn ảnh trong db
-                $oldImagePaths = DB::table('san_pham')->where('ma_san_pham', '=', $request->product_id)->get();
-                $oldImagePath = $oldImagePaths[0]->anh_san_pham;
+                $product = DB::table('san_pham')->where('ma_san_pham', '=', $request->product_id)->get();
+                $oldImagePath = $product[0]->anh_san_pham;
 
                 // Xóa ảnh cũ
                 File::delete('storage/product/' . $oldImagePath);
@@ -180,7 +177,7 @@ class ProductController extends Controller
             DB::table('san_pham')
                 ->where('ma_san_pham', '=', $request->product_id)
                 ->update([
-                    'ten_san_pham' => $data['product_name'],
+                    'ten_san_pham' => $request->product_name,
                     'mo_ta_san_pham' => $request->product_description,
                     'gia' => $request->product_price,
                     'so_luong' => $request->product_quantity,
@@ -199,10 +196,18 @@ class ProductController extends Controller
      * Delete
      * method: get
      */
-    public function delete($category_id)
+    public function delete($product_id)
     {
         try {
-            DB::table('danh_muc')->where('ma_san_pham', '=', $category_id)->delete();
+            // Lấy đường dẫn ảnh trong db
+            $product = DB::table('san_pham')->where('ma_san_pham', '=', $product_id)->get();
+            $oldImagePath = $product[0]->anh_san_pham;
+
+            // Xóa trong db
+            DB::table('san_pham')->where('ma_san_pham', '=', $product_id)->delete();
+
+            // Xóa ảnh trong thư mục
+            File::delete('storage/product/' . $oldImagePath);
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }

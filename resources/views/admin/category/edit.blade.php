@@ -7,8 +7,8 @@
 <div class="mb-3">
 </div>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Sửa</h1>
-    <h5><a class="text-primary mb-5" href="{{url('admin/category/list')}}">Danh mục</a> / Sửa</h5>
+    <h1 class="h3 mb-0 text-primary font-weight-bold">Thông Tin Danh Mục</h1>
+    <h5><a class="text-primary mb-5" href="{{url('admin/category/list')}}">Danh mục</a> / Thông tin danh mục</h5>
 </div>
 <!-- Page Body -->
 <div class="card">
@@ -22,14 +22,17 @@
                     <div class="form-group row">
                         <label for="category_id" class="col-md-3 col-form-label">Mã</label>
                         <div class="col-sm-8">
-                            <input type="text" name="category_id" class="form-control" id="category_id" value="{{ $category->ma_danh_muc }}" readonly />
+                            <input type="text" name="category_id" class="form-control" id="category_id"
+                                value="{{ $category->ma_danh_muc }}" readonly />
                         </div>
                     </div>
                     <!-- tên -->
                     <div class="form-group row">
                         <label for="category_name" class="col-md-3 col-form-label">Tên</label>
                         <div class="col-sm-8">
-                            <input type="text" name="category_name" class="form-control" id="category_name" placeholder="Nhập tên" pattern=".{3,40}" title="Tối thiểu 3 ký tự và tối đa 40 ký tự" required value="{{ $category->ten_danh_muc }}" />
+                            <input type="text" name="category_name" class="form-control" id="category_name"
+                                placeholder="Nhập tên" pattern=".{3,40}" title="Tối thiểu 3 ký tự và tối đa 40 ký tự"
+                                required value="{{ $category->ten_danh_muc }}" />
                         </div>
                     </div>
 
@@ -37,7 +40,8 @@
                     <div class="form-group row">
                         <label for="category_description" class="col-md-3 col-form-label">Mô tả</label>
                         <div class="col-md-8">
-                            <textarea class="form-control" name="category_description" id="category_description" rows="5">{{ $category->mo_ta }}</textarea>
+                            <textarea class="form-control" name="category_description" id="category_description"
+                                rows="5">{{ $category->mo_ta }}</textarea>
                         </div>
                     </div>
 
@@ -46,8 +50,8 @@
 
             <!-- submit -->
             <div class="row d-flex justify-content-center">
-                <button class="btn btn-success mr-3" type="submit">Lưu</button>
-                <a href="{{ url('admin/category/list') }}" class="btn btn-secondary">Hủy</a>
+                <button class="btn btn-success mr-3" type="submit">Cập Nhật</button>
+                <a href="{{ url('admin/category/list') }}" class="btn btn-secondary">Quay Lại</a>
             </div>
 
         </form>

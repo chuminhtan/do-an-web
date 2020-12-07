@@ -22,9 +22,9 @@
                 <div class="col-md-5">
                     <!-- mã -->
                     <div class="form-group row">
-                        <label for="product_name" class="col-md-3 col-form-label">Mã</label>
+                        <label for="product_id" class="col-md-3 col-form-label">Mã</label>
                         <div class="col-sm-8">
-                            <input type="text" name="product_name" class="form-control font-weight-bold" id="product_name" placeholder="Nhập tên" pattern=".{5,40}" title="Tối thiểu 5 ký tự và tối đa 40 ký tự" required value="{{ $product->ma_san_pham }}" readonly />
+                            <input type="text" name="product_id" class="form-control font-weight-bold" id="product_name" placeholder="Nhập tên" pattern=".{5,40}" title="Tối thiểu 5 ký tự và tối đa 40 ký tự" required value="{{ $product->ma_san_pham }}" readonly />
                         </div>
                     </div>
 

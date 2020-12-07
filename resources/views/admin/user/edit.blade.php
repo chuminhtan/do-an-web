@@ -7,7 +7,7 @@
 <div class="mb-3">
 </div>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Thông Tin Người Dùng</h1>
+    <h1 class="h3 mb-0 text-primary font-weight-bold">Thông Tin Người Dùng</h1>
     <h5><a class="text-primary mb-5" href="{{url('admin/user/list')}}">Người dùng</a> / Thông tin người dùng</h5>
 </div>
 <!-- Page Body -->
@@ -26,7 +26,8 @@
                     <div class="form-group row">
                         <label for="user_id" class="col-md-3 col-form-label">Mã</label>
                         <div class="col-md-8">
-                            <input type="text" name="user_id" class="form-control" id="user_id" required value="{{ $user->ma_nguoi_dung }}" readonly />
+                            <input type="text" name="user_id" class="form-control" id="user_id" required
+                                value="{{ $user->ma_nguoi_dung }}" readonly />
                         </div>
                     </div>
 
@@ -34,7 +35,8 @@
                     <div class="form-group row">
                         <label for="user_name" class="col-md-3 col-form-label">Tên</label>
                         <div class="col-sm-8">
-                            <input type="text" name="user_name" class="form-control" id="user_name" placeholder="Nhập tên" pattern=".{5,50}" required value="{{ $user->ten_nguoi_dung }}" />
+                            <input type="text" name="user_name" class="form-control" id="user_name"
+                                placeholder="Nhập tên" pattern=".{5,50}" required value="{{ $user->ten_nguoi_dung }}" />
                         </div>
                     </div>
 
@@ -42,7 +44,9 @@
                     <div class="form-group row">
                         <label for="user_phone" class="col-md-3 col-form-label">Điện thoại</label>
                         <div class="col-sm-8">
-                            <input type="number" name="user_phone" class="form-control" id="user_phone" placeholder="Nhập điện thoại" pattern=".{10,15}" required value="{{ $user->dien_thoai }}" />
+                            <input type="number" name="user_phone" class="form-control" id="user_phone"
+                                placeholder="Nhập điện thoại" pattern=".{10,15}" required
+                                value="{{ $user->dien_thoai }}" />
                         </div>
                     </div>
 
@@ -54,7 +58,8 @@
                                 <option value="1" class="font-weight-bold" @if ($user->loai == 1) seleted @endif>
                                     Nhân viên
                                 </option>
-                                <option value="2" class="font-weight-bold" @if ($user->loai == 2) seleted @endif>Quản trị</option>
+                                <option value="2" class="font-weight-bold" @if ($user->loai == 2) seleted @endif>Quản
+                                    trị</option>
                             </select>
                         </div>
                     </div>
@@ -63,8 +68,10 @@
                     <div class="form-group row">
                         <label for="user_image" class="col-md-3 col-form-label">Ảnh đại diện</label>
                         <div class="col-sm-8">
-                            <input type="file" name="user_image" class="form-control mb-3 p-1" accept="image/*" id="user_image">
-                            <img id="output" src="{{ asset("storage/user/$user->anh_nguoi_dung")}}" width="300" style="border:2px solid #000; border-radius: 5px;" />
+                            <input type="file" name="user_image" class="form-control mb-3 p-1" accept="image/*"
+                                id="user_image">
+                            <img id="output" src="{{ asset("storage/user/$user->anh_nguoi_dung")}}" width="300"
+                                style="border:2px solid #000; border-radius: 5px;" />
                         </div>
                     </div>
 
@@ -77,7 +84,8 @@
                     <div class="form-group row">
                         <label for="user_email" class="col-md-3 col-form-label">Email</label>
                         <div class="col-md-8">
-                            <input type="email" name="user_email" class="form-control" id="user_email" placeholder="Nhập email" value="{{ $user->email }}" readonly />
+                            <input type="email" name="user_email" class="form-control" id="user_email"
+                                placeholder="Nhập email" value="{{ $user->email }}" readonly />
                         </div>
                     </div>
 
@@ -85,7 +93,8 @@
                     <div class="form-group row">
                         <label for="is_change_password" class="col-md-3 col-form-label">Đổi mật khẩu mới</label>
                         <div class="col-md-1">
-                            <input type="checkbox" name="is_change_password" class="form-control" id="is_change_password" />
+                            <input type="checkbox" name="is_change_password" class="form-control"
+                                id="is_change_password" />
                         </div>
                     </div>
 
@@ -93,7 +102,9 @@
                     <div class="form-group row">
                         <label for="new_password" class="col-md-3 col-form-label">Mật khẩu mới</label>
                         <div class="col-md-8">
-                            <input type="password" name="new_password" class="form-control" id="new_password" placeholder="Nhập mật khẩu mới" pattern=".{6,30}" title="Tối thiểu 6 ký tự và tối đa 30 ký tự" required disabled />
+                            <input type="password" name="new_password" class="form-control" id="new_password"
+                                placeholder="Nhập mật khẩu mới" pattern=".{6,30}"
+                                title="Tối thiểu 6 ký tự và tối đa 30 ký tự" required disabled />
                         </div>
                     </div>
 

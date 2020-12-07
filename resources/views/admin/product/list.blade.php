@@ -5,7 +5,7 @@
 @section('main-container')
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Sản Phẩm</h1>
+    <h1 class="h3 mb-0 text-primary font-weight-bold">Sản Phẩm</h1>
 </div>
 
 <!-- Page Body -->
@@ -73,10 +73,13 @@
                             <td>{{ $product->ten_danh_muc }}</td>
                             <td>{{ $product->thoi_gian_tao }}</td>
                             <td>
-                                <a href="{{ url("admin/product/info/$product->ma_san_pham") }}" class="btn btn-info btn-circle btn-sm">
+                                <a href="{{ url("admin/product/info/$product->ma_san_pham") }}"
+                                    class="btn btn-info btn-circle btn-sm">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a href="{{ url("admin/product/delete/$product->ma_san_pham ") }}" class="btn btn-danger btn-circle btn-sm btn-delete" onclick="return confirmDelete(this)">
+                                <a href="{{ url("admin/product/delete/$product->ma_san_pham ") }}"
+                                    class="btn btn-danger btn-circle btn-sm btn-delete"
+                                    onclick="return confirmDelete(this)">
                                     <i class=" fas fa-trash"></i>
                                 </a>
                             </td>
