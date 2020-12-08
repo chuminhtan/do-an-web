@@ -31,8 +31,8 @@
                             <th>Mã</th>
                             <th>Tên</th>
                             <th>Mô Tả</th>
-                            <th>TG Tạo</th>
-                            <th>TG Cập Nhật</th>
+                            <th>Ngày Tạo</th>
+                            <th>Ngày Cập Nhật</th>
                             <th>Thao Tác</th>
                         </tr>
                     </thead>
@@ -48,8 +48,8 @@
                             <td>{{ $category->ma_danh_muc }}</td>
                             <td>{{ $category->ten_danh_muc }}</td>
                             <td>{{ $category->mo_ta }}</td>
-                            <td>{{ $category->thoi_gian_tao }}</td>
-                            <td>{{ $category->thoi_gian_cap_nhat }}</td>
+                            <td>{{ date("H:m d/m/y", strtotime($category->thoi_gian_tao)) }}</td>
+                            <td>{{ date("H:m d/m/y", strtotime($category->thoi_gian_cap_nhat)) }}</td>
                             <td>
                                 <a href="{{ url("admin/category/info/$category->ma_danh_muc") }}"
                                     class="btn btn-info btn-circle btn-sm">

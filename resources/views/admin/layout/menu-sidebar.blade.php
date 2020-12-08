@@ -18,9 +18,12 @@
             <span>Dashboard</span></a>
     </li>
 
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
     <!-- USER- Pages Collapse Menu - Chỉ hiển thị cho Quản Trị-->
     @if (Session::has('user_type') && Session::get('user_type') == 2)
-    <li class="nav-item active">
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true"
             aria-controls="collapseUser">
             <i class="fas fa-fw fa-user"></i>
@@ -35,6 +38,9 @@
         </div>
     </li>
     @endif
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
 
     <!-- CATEGORY- Pages Collapse Menu -->
     <li class="nav-item">
@@ -52,6 +58,10 @@
         </div>
     </li>
 
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
     <!-- PRODUCT- Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
@@ -68,7 +78,24 @@
         </div>
     </li>
 
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
 
+    <!-- ORDER- Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrder" aria-expanded="true"
+            aria-controls="collapseOrder">
+            <i class="fas fa-fw fa-boxes"></i>
+            <span>Đơn Đặt Hàng</span>
+        </a>
+        <div id="collapseOrder" class="collapse" aria-labelledby="headingOrder" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Quản Lý Đơn Hàng</h6>
+                <a class="collapse-item" href="{{ url('admin/order/list') }}">Danh Sách</a>
+                <a class="collapse-item" href="{{ url('admin/order/create') }}">Tạo Mới</a>
+            </div>
+        </div>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

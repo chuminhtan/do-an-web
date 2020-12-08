@@ -31,6 +31,7 @@
 		<!-- Menu Sidebar -->
 
 		@include('admin.layout.menu-sidebar')
+
 		<!-- End of Sidebar -->
 
 		<!-- Content Wrapper -->

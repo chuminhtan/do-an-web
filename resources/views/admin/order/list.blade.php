@@ -5,7 +5,7 @@
 @section('main-container')
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-primary font-weight-bold">Người Dùng</h1>
+    <h1 class="h3 mb-0 text-primary font-weight-bold">Đơn Hàng</h1>
 </div>
 
 <!-- Page Body -->
@@ -15,7 +15,7 @@
         <!-- Content Row -->
         <div class="row mb-4">
             <div class="col-md-2">
-                <a href="{{ url('admin/user/create') }}" class="btn btn-success">Tạo Mới</a>
+                <a href="{{ url('admin/order/create') }}" class="btn btn-success">Tạo Mới</a>
             </div>
         </div>
 
@@ -27,66 +27,50 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Mã</th>
-                            <th>Ảnh</th>
-                            <th>Họ Tên</th>
-                            <th>Điện Thoại</th>
-                            <th>Email</th>
-                            <th>Quyền</th>
-                            <th>Đăng Nhập Gần Nhất</th>
                             <th>Ngày Tạo</th>
-                            <th>Ngày Cập Nhật</th>
+                            <th>Đơn Hàng</th>
+                            <th>Tình Trạng</th>
+                            <th>Địa Chỉ</th>
+                            <th>Ngày Giao Hàng</th>
+                            <th>Khách Hàng</th>
+                            <th>Tổng Tiền</th>
                             <th>Thao Tác</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                        $number = 1
-                        @endphp
-
-                        @if ( isset($userList) )
-                        @foreach($userList as $user)
+                        @if ( isset($orderList) )
+                        @foreach($orderList as $order)
                         <tr>
-                            <td>{{ $number }}</td>
-                            <td>{{ $user->ma_nguoi_dung }}</td>
+                            <td>{{ date("H:m d/m/y", strtotime($order->thoi_gian_tao)) }}</td>
+                            <td>{{ $order->ma_don_hang }}</td>
                             <td>
-                                <image src="{{ asset("storage/user/$user->anh_nguoi_dung") }}" alt="img" width="80">
-                            </td>
-                            <td>{{ $user->ten_nguoi_dung }}</td>
-                            <td>{{ $user->dien_thoai }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                @if ($user->loai == 1)
-                                <span class="text-white bg-secondary p-1">Nhân Viên</span>
-                                @elseif ($user->loai== 2)
-                                <span class="text-white bg-success p-1">Quản Trị</span>
+                                @if ( $order->tinh_trang == 0)
+                                <span class="text-white bg-secondary p-1">Hủy</span>
+                                @elseif ( $order->tinh_trang == 1)
+                                <span class="text-white bg-warning p-1">Chờ Xác Nhận</span>
+                                @elseif ( $order->tinh_trang == 2)
+                                <span class="text-white bg-primary p-1">Đang Xử Lý</span>
+                                @elseif ( $order->tinh_trang == 3)
+                                <span class="text-white bg-primary p-1">Hoàn Tất</span>
                                 @endif
                             </td>
-                            <td>{{ $user->dang_nhap_gan_nhat }}</td>
-                            <td>{{ date("H:m d/m/y", strtotime($user->thoi_gian_tao)) }}</td>
-                            <td>{{ date("H:m d/m/y", strtotime($user->thoi_gian_cap_nhat))  }}</td>
+                            <td>{{ $order->dia_chi_giao_hang }}</td>
+                            <td>{{ date("H:m d/m/y", strtotime($order->thoi_gian_giao_hang)) }}</td>
+                            <td>{{ $order->ten_khach_hang }}</td>
+                            <td>{{ $order->tong_tien }}</td>
                             <td>
-                                <a href="{{ url("admin/user/info/$user->ma_nguoi_dung") }}"
+                                <a href="{{ url("admin/order/info/$order->ma_don_hang") }}"
                                     class="btn btn-info btn-circle btn-sm">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a href="{{ url("admin/user/delete/$user->ma_nguoi_dung") }}"
-                                    class="btn btn-danger btn-circle btn-sm btn-delete"
-                                    onclick="return confirmDelete(this)">
-                                    <i class=" fas fa-trash"></i>
-                                </a>
                             </td>
                         </tr>
-                        @php
-                        $number++
-                        @endphp
                         @endforeach
                         @endif
                     </tbody>
                 </table>
-                @if (isset($userList))
-                {{ $userList->links() }}
+                @if (isset($orderList))
+                {{ $orderList->links() }}
                 @endif
             </div>
         </div>
@@ -100,7 +84,7 @@
     // Xác nhận trước khi xóa. btnDelete được truyền vào bằng từ khóa this trong lúc gọi hàm
     const confirmDelete = (btnDelete) => {
         Swal.fire({
-            title: 'Xóa người dùng này?',
+            title: 'Xóa Sản Phẩm này?',
             text: "Bạn không thể khôi phục sau khi xóa",
             icon: 'warning',
             showCancelButton: true,
@@ -125,7 +109,7 @@
         showConfirmButton: false,
         timer: 1200
     }).then((result) => {
-        location.assign("{{ url('admin/user/list') }}")
+        location.assign("{{ url('admin/order/list') }}")
     })
     @else
 

@@ -36,7 +36,7 @@
                             <th>Tình Trạng</th>
                             <th>Phân Loại</th>
                             <th>Danh Mục</th>
-                            <th>Thời Gian Tạo</th>
+                            <th>Ngày Tạo</th>
                             <th>Thao Tác</th>
                         </tr>
                     </thead>
@@ -71,7 +71,7 @@
                                 @endif
                             </td>
                             <td>{{ $product->ten_danh_muc }}</td>
-                            <td>{{ $product->thoi_gian_tao }}</td>
+                            <td>{{ date("H:m d/m/y", strtotime($product->thoi_gian_tao)) }}</td>
                             <td>
                                 <a href="{{ url("admin/product/info/$product->ma_san_pham") }}"
                                     class="btn btn-info btn-circle btn-sm">
