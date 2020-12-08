@@ -11,24 +11,57 @@
 |
 */
 
+
+/*
+|--------------------------------------------------------------------------
+| STORE Web Routes
+|--------------------------------------------------------------------------
+|
+| Thiết lập đường dẫn vào trang STORE ở đây
+|
+*/
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('admin/', function () {
-    return view('admin.user.list');
-});
 
 
-/**
- * Tạo route group cho tất cả trang Admin.
- * prefix : thêm tiền tố admin vào đường dẫn được liệt kê 
- */
-Route::group(['prefix' => 'admin'], function () {
 
-    // User group. Thêm tiền tố user vào đường dẫn được liệt kê
-    Route::group(['prefix' => 'user'], function () {
 
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN Web Routes
+|--------------------------------------------------------------------------
+|
+| Thiết lập đường dẫn vào trang ADMIN ở đây
+|
+*/
+
+// Root
+Route::get('admin', 'AdminController@index'); // URL = localhost:8000/admin
+Route::get('admin/login', 'AdminController@viewLogin');
+Route::post('admin/login', 'AdminController@login');
+
+/*
+| Tạo route group cho Admin.
+| prefix : thêm tiền tố vào đường dẫn được liệt kê bên trong hàm
+| middleware: Hàm xử lý trung gian. Middleware [check.login]  kiểm tra xem người dùng có đăng nhập chưa. Nếu đăng nhập rồi mới được truy cập vào các route bên trong. Còn không chuyển hướng về trang login
+*/
+
+Route::group(['prefix' => 'admin', 'middleware' => ['check.login']], function () {
+
+    // Logout
+    Route::get('logout', 'AdminController@logout');
+
+    // Dashboard
+    Route::get('dashboard', function () {
+        return view('admin.dashboard.dashboard');
+    });
+
+    // User group - Middelware [check.user.permission] chỉ cho phép người Quản trị được vào route này. Nhân viên không đc truy cập
+    Route::group(['prefix' => 'user', 'middleware' => ['check.user.permission']], function () {
         Route::get('list', 'UserController@viewList'); // URL = localhost:8000/admin/user/list
         Route::get('create', 'UserController@viewCreate'); // URL = localhost:8000/admin/user/create
         Route::get('info/{user_id}', 'UserController@viewInfo'); // URL = localhost:8000/admin/user/info/{user_id}

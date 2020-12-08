@@ -113,17 +113,17 @@ class ProductController extends Controller
     {
         try {
             $categoryList = DB::table('danh_muc')->get();
-            $products = DB::table('san_pham')->where('ma_san_pham', '=', $product_id)->get();
+            $product = DB::table('san_pham')->where('ma_san_pham', '=', $product_id)->first();
 
             // kiểm tra id tồn tại ?
-            if (count($products) == 0) {
+            if ($product == null) {
                 return view('admin.product.list', ['result' => 'fail', 'message' => 'Không tồn tại']);
             }
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }
 
-        return view('admin.product.edit', ['product' => $products[0], 'categoryList' => $categoryList]);
+        return view('admin.product.info', ['product' => $product, 'categoryList' => $categoryList]);
     }
 
     /**
@@ -159,8 +159,8 @@ class ProductController extends Controller
             // Cập nhật image
             if ($request->has('product_image')) {
                 // Lấy đường dẫn ảnh trong db
-                $product = DB::table('san_pham')->where('ma_san_pham', '=', $request->product_id)->get();
-                $oldImagePath = $product[0]->anh_san_pham;
+                $product = DB::table('san_pham')->where('ma_san_pham', '=', $request->product_id)->first();
+                $oldImagePath = $product->anh_san_pham;
 
                 // Xóa ảnh cũ
                 File::delete('storage/product/' . $oldImagePath);
@@ -200,8 +200,8 @@ class ProductController extends Controller
     {
         try {
             // Lấy đường dẫn ảnh trong db
-            $product = DB::table('san_pham')->where('ma_san_pham', '=', $product_id)->get();
-            $oldImagePath = $product[0]->anh_san_pham;
+            $product = DB::table('san_pham')->where('ma_san_pham', '=', $product_id)->first();
+            $oldImagePath = $product->anh_san_pham;
 
             // Xóa trong db
             DB::table('san_pham')->where('ma_san_pham', '=', $product_id)->delete();

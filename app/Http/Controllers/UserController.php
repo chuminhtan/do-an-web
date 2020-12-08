@@ -94,16 +94,16 @@ class UserController extends Controller
     {
 
         try {
-            $users = DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $user_id)->get();
-
-            if (count($users) == 0) {
+            $user = DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $user_id)->first();
+            if ($user == null) {
                 return view('admin.user.list', ['result' => 'fail', 'message' => 'Không tồn tại']);
             }
         } catch (Exception $ex) {
-            return view('admin.user.edit', ['result' => 'fail']);
+
+            dd($ex->getMessage());
         }
 
-        return view('admin.user.edit', ['user' => $users[0]]);
+        return view('admin.user.info', ['user' => $user]);
     }
 
     /**
@@ -130,8 +130,8 @@ class UserController extends Controller
             if ($request->has('user_image')) {
 
                 // Lấy đường dẫn ảnh trong db
-                $oldImagePaths = DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $request->user_id)->get();
-                $oldImagePath = $oldImagePaths[0]->anh_nguoi_dung;
+                $user = DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $request->user_id)->first();
+                $oldImagePath = $user->anh_nguoi_dung;
 
                 // Xóa ảnh cũ
                 File::delete('storage/user/' . $oldImagePath);
@@ -173,8 +173,8 @@ class UserController extends Controller
     {
         try {
             // Lấy đường dẫn ảnh trong db
-            $oldImagePaths = DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $user_id)->get();
-            $oldImagePath = $oldImagePaths[0]->anh_nguoi_dung;
+            $user = DB::table('nguoi_dung')->where('ma_nguoi_dung', '=', $user_id)->first;
+            $oldImagePath = $user->anh_nguoi_dung;
 
             // Xóa ảnh cũ
             File::delete('storage/user/' . $oldImagePath);

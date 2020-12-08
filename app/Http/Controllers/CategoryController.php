@@ -77,17 +77,17 @@ class CategoryController extends Controller
     public function viewInfo($category_id)
     {
         try {
-            $edits = DB::table('danh_muc')->where('ma_danh_muc', '=', $category_id)->get();
+            $category = DB::table('danh_muc')->where('ma_danh_muc', '=', $category_id)->first();
 
             // kiểm tra danh mục tồn tại ?
-            if (count($edits) == 0) {
+            if ($category == null) {
                 return view('admin.category.list', ['result' => 'fail', 'message' => 'Không tồn tại']);
             }
         } catch (Exception $ex) {
-            return view('admin.category.edit', ['result' => 'fail', 'message' => $ex->getMessage()]);
+            dd($ex->getMessage());
         }
 
-        return view('admin.category.edit', ['category' => $edits[0]]);
+        return view('admin.category.info', ['category' => $category]);
     }
 
     /**

@@ -18,7 +18,8 @@
             <span>Dashboard</span></a>
     </li>
 
-    <!-- USER- Pages Collapse Menu -->
+    <!-- USER- Pages Collapse Menu - Chỉ hiển thị cho Quản Trị-->
+    @if (Session::has('user_type') && Session::get('user_type') == 2)
     <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true"
             aria-controls="collapseUser">
@@ -33,6 +34,7 @@
             </div>
         </div>
     </li>
+    @endif
 
     <!-- CATEGORY- Pages Collapse Menu -->
     <li class="nav-item">

@@ -15,7 +15,7 @@
     <div class="card-body">
 
         <!-- Content Row -->
-        <form class="conatainer" action="{{ asset('admin/category/create') }}" method="POST">
+        <form class="conatainer" action="{{ url('admin/category/create') }}" method="POST">
             @csrf
             <div class="row d-flex justify-content-between">
                 <div class="col-md-5">
@@ -24,7 +24,9 @@
                     <div class="form-group row">
                         <label for="category_name" class="col-md-3 col-form-label">Tên</label>
                         <div class="col-sm-8">
-                            <input type="text" name="category_name" class="form-control" id="category_name" placeholder="Nhập tên" pattern=".{3,40}" title="Tối thiểu 3 ký tự và tối đa 40 ký tự" required />
+                            <input type="text" name="category_name" class="form-control" id="category_name"
+                                placeholder="Nhập tên" pattern=".{3,40}" title="Tối thiểu 3 ký tự và tối đa 40 ký tự"
+                                required />
                         </div>
                     </div>
 
@@ -32,7 +34,8 @@
                     <div class="form-group row">
                         <label for="category_description" class="col-md-3 col-form-label">Mô tả</label>
                         <div class="col-md-8">
-                            <textarea class="form-control" name="category_description" id="category_description" rows="5"></textarea>
+                            <textarea class="form-control" name="category_description" id="category_description"
+                                rows="5"></textarea>
                         </div>
                     </div>
 
